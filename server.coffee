@@ -20,6 +20,8 @@ dbpool = pool.Pool
         cb("connection failure", null)
       else
         cb(null, conn)
+  destroy: (conn) ->
+    conn.disconnect()
   max: 1,
   min: 1
 
