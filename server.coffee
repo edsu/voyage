@@ -121,10 +121,8 @@ pollForCheckouts = (cb) ->
 
 
 # create the web app
-
 home = (req, res) ->
   res.sendfile 'static/index.html'
-
 
 app = express()
 app.use '/static', express.static(__dirname + '/static')
@@ -133,7 +131,6 @@ app.get '/', home
 server = http.createServer app
 
 # configure socket.io
-
 io = socketio.listen server
 io.sockets.on 'connection', (socket) ->
   # the recent list can be out of order due to async db calls
@@ -145,8 +142,4 @@ pollForCheckouts (book) ->
   io.sockets.emit 'checkout', book
 
 # start up the server!
-
 server.listen config.port
-
-
-
