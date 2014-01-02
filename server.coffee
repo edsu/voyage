@@ -117,7 +117,7 @@ pollForCheckouts = (cb) ->
       recent.push book
       seen[book.id] = true
       cb book
-  delay 3000, -> pollForCheckouts cb
+  delay config.pollDelay, -> pollForCheckouts cb
 
 
 # create the web app
