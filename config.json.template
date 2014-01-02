@@ -1,0 +1,8 @@
+{
+  "port": 8080,
+  "db": {
+    "user": "",
+    "password': "",
+    "tns": "(DESCRIPTION=(ADDRESS_LIST=(ADDRESS=(PROTOCOL=TCP)(HOST=<hostname>)(PORT=<port>))(CONNECT_DATA=(SID=<dbname>)))"
+  }
+}

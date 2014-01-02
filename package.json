@@ -1,0 +1,10 @@
+{
+  "name": "voyage",
+  "version": "0.0.1",
+  "dependencies": {
+    "coffee-script": "latest",
+    "express": "latest",
+    "oracle": "latest",
+    "generic-pool": "latest"
+  }
+}

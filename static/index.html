@@ -1,0 +1,67 @@
+<!doctype html>
+<html>
+
+  <head>
+    <title>WRLC Checkouts</title>
+    <link rel="stylesheet" href="/static/style.css"></style>
+  </head>
+
+  <body>
+
+    <h1>WRLC Checkouts</h1>
+    <div id="checkouts">
+    </div>
+
+    <script src="http://gsf.github.io/whiskers.js/whiskers.min.js"></script>
+    <script src="http://code.jquery.com/jquery-1.10.1.min.js"></script>
+    <script src="/socket.io/socket.io.js"></script>
+
+    <script id="bookTemplate" type="text/template">
+      <article class="book">
+        <a href="http://findit.library.gwu.edu/item/{id}" class="title">{title}</a>
+        <br>
+        {if author}
+        <span class="author">{author}</span>
+        <br>
+        {/if}
+        <span class="place">{placeOfPublication}</span>
+        <span class="publisher">{publisher}</span>
+        <span class="pubDate">{publicationDate}</span>
+
+        <footer>
+        <time datetime="{charged}">{chargeTime}</time>
+        <span class="library">{libraryName}</span>
+        </footer>
+      </article>
+    </script>
+
+    <script>
+      var bookTemplate = $("#bookTemplate").html();
+
+      function run() {
+        var socket = io.connect();
+        socket.on('checkout', addCheckout);
+      }
+
+      function pad(n) {
+        return ('00' + n).slice(-2)
+      }
+
+      function addCheckout(book) {
+        var t = new Date(book.charged);
+        // format the chargeTime datetime as HH:MM
+        book.chargeTime = pad(t.getHours()) + ':' + 
+                          pad(t.getMinutes()) + ':' + 
+                          pad(t.getSeconds());
+        var update = $(whiskers.render(bookTemplate, book));
+        update.hide();
+        $("#checkouts").prepend(update);
+        update.slideDown();
+      }
+
+      $(run);
+    </script>
+
+  </body>
+
+</html>

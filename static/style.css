@@ -1,0 +1,44 @@
+body {
+    margin-left: 10%;
+    margin-right: 10%;
+    font-size: 14pt;
+    font-family: Helvetica;
+}
+
+h1 {
+    text-align: center;
+}
+
+article {
+  margin-left: 20%;
+  margin-right: 20%;
+  padding: 20px;
+  border: thin solid #eeeeee;
+  margin-bottom: 20px;
+}
+
+article .title {
+  font-size: 18pt;
+}
+
+a { 
+  color: black;
+  font-weight: bold;
+  text-decoration: none;
+}
+
+a:hover {
+  color: red;
+}
+
+footer {
+  color: gray;
+  font-size: 12pt;
+  margin-top: 1em;
+}
+
+footer .library {
+  font-weight: bold;
+}
+
+
