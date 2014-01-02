@@ -69,12 +69,14 @@ recentCheckouts = (limit, cb) ->
       chargeDate: chargeDate
     getBibData charge, cb
 
-# remove some punctuation
+
+# helper to remove some punctuation
 clean = (s) ->
   if s
     s = s.replace(/^[./, ]+/, '')
     s = s.replace(/[./, ]+$/, '')
   return s
+
 
 # get bibliographic information for a given charge
 getBibData = (charge, cb) ->
@@ -104,6 +106,7 @@ getBibData = (charge, cb) ->
       charged: charge.chargeDate
     cb book
 
+
 # helper for doing timeouts
 delay = (ms, func) -> setTimeout func, ms
 
@@ -129,8 +132,8 @@ home = (req, res) ->
 app = express()
 app.use '/static', express.static(__dirname + '/static')
 app.get '/', home
-
 server = http.createServer app
+
 
 # configure socket.io
 io = socketio.listen server
@@ -140,6 +143,7 @@ io.sockets.on 'connection', (socket) ->
   for book in recent
     socket.emit 'checkout', book
 
+# start looking for checkouts
 pollForCheckouts (book) ->
   io.sockets.emit 'checkout', book
 
