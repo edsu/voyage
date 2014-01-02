@@ -1,7 +1,8 @@
 voyage
 ======
 
-Displays a stream of circulation activity from a Voyager ILS.
+Displays a stream of circulation activity from a Voyager ILS. You'll 
+need a read-only connection to Voyager's Oracle instance for this to work.
 
 Install
 =======
