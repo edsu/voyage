@@ -1,9 +1,100 @@
 {
   "port": 8080,
   "pollDelay": 3000,
+  "recentWindow": 20,
   "db": {
     "user": "",
     "password': "",
     "tns": "(DESCRIPTION=(ADDRESS_LIST=(ADDRESS=(PROTOCOL=TCP)(HOST=<hostname>)(PORT=<port>))(CONNECT_DATA=(SID=<dbname>)))"
+  },
+  "libraries": {
+    "GM": {
+      "name": "George Mason",
+      "url": "http://library.gmu.edu/"
+    },
+    "WRLC": {
+      "name": "WRLC",
+      "url": "http://www.wrlc.org"
+    },
+    "TR": {
+      "name": "TR",
+      "url": ""
+    },
+    "DA": {
+      "name": "DA",
+      "url": ""
+    },
+    "E-Resources": {
+      "name": "E-Resources",
+      "url": ""
+    },
+    "GT": {
+      "name": "Georgetown",
+      "url": "http://www.library.georgetown.edu"
+    },
+    "HU": {
+      "name": "Howard",
+      "url": "http://library.howard.edu/"
+    },
+    "CU": {
+      "name": "Catholic",
+      "url": "http://libraries.cua.edu/"
+    },
+    "LL": {
+      "name": "LL",
+      "url": ""
+    },
+    "MU": {
+      "name": "Marymount",
+      "url": "http://www.marymount.edu/lls/"
+    },
+    "DC": {
+      "name": "UDC",
+      "url": "http://www.udc.edu/"
+    },
+    "LI": {
+      "name": "LI",
+      "url": ""
+    },
+    "E-GovDoc": {
+      "name": "E-GovDoc",
+      "url": ""
+    },
+    "HD":  {
+      "name": "HD",
+      "url": ""
+    },
+    "JB": {
+      "name": "Jacob Burns Law",
+      "url": "http://www.law.gwu.edu/library/Pages/Default.aspx"
+    },
+    "HS": {
+      "name": "HS",
+      "url": ""
+    },
+    "HL": {
+      "name": "HL",
+      "url": ""
+    },
+    "AU": {
+      "name": "American",
+      "url": "http://www.american.edu/library"
+    },
+    "GW": {
+      "name": "George Washington",
+      "url": "http://library.gwu.edu"
+    },
+    "AU-WCL": {
+      "name": "AU-WCL",
+      "url": ""
+    },
+    "GA": {
+      "name": "Gallaudet",
+      "url": "http://www.gallaudet.edu/library.html"
+    },
+    "HI": {
+      "name": "HI",
+      "url": ""
+    }
   }
 }
