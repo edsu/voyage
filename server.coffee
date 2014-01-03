@@ -22,7 +22,8 @@ dbpool = pool.Pool
       else
         cb(null, conn)
   destroy: (conn) ->
-    conn.disconnect()
+    console.log "closing db connection"
+    conn.close()
   max: 1,
   min: 1
 
@@ -36,6 +37,7 @@ select = (q, params, cb) ->
       conn.execute q, params, (err, rows) ->
         if err
           console.log "select failure: ", err
+          dbpool.destroy conn
         else
           rows.map cb
       dbpool.release conn
@@ -93,13 +95,14 @@ decodeLibrary = (code) ->
 getBibData = (charge, cb) ->
   q = "
   SELECT bib_item.bib_id, bib_text.*, library.library_name AS owner
-  FROM bib_item, bib_text, item, location, library
+  FROM bib_item, bib_text, bib_master, item, location, library
   WHERE bib_item.item_id = :1
     AND bib_item.bib_id = bib_text.bib_id
     AND bib_item.item_id = item.item_id
     AND item.perm_location = location.location_id
     AND location.library_id = library.library_id
-
+    AND bib_item.bib_id = bib_master.bib_id
+    AND bib_master.suppress_in_opac != 'Y'
   "
   select q, [charge.itemId], (row) ->
     book =
