@@ -18,6 +18,7 @@
 
     <script id="bookTemplate" type="text/template">
       <article class="book">
+        <img class="thumbnail" src="http://covers.openlibrary.org/b/isbn/{isbn}-M.jpg">
         <a href="http://findit.library.gwu.edu/item/{id}" class="title">{title}</a>
         <br>
         {if author}
@@ -27,10 +28,27 @@
         <span class="place">{placeOfPublication}</span>
         <span class="publisher">{publisher}</span>
         <span class="pubDate">{publicationDate}</span>
+        {if isbn}
+        <br>
+        ISBN: {isbn}
+        {/if}
 
         <footer>
-        <time datetime="{charged}">{chargeTime}</time>
-        <span class="library">{libraryName}</span>
+        <time datetime="{charge.created}">{charge.time}</time> - 
+        checked out at
+        {if charge.library.url}
+        <a href="{charge.library.url}" class="library">{charge.library.name}</a>
+        {else}
+        <span class="library">{charge.library.name}</span>
+        {/if}
+        {if differentOwner}
+          owned by
+          {if owner.url}
+          <a class="library" href="{owner.url}">{owner.name}</a>
+          {else}
+          <span class="library">{owner.name}</span>
+          {/if}
+        {/if}
         </footer>
       </article>
     </script>
@@ -48,11 +66,12 @@
       }
 
       function addCheckout(book) {
-        var t = new Date(book.charged);
+        var t = new Date(book.charge.created);
         // format the chargeTime datetime as HH:MM
-        book.chargeTime = pad(t.getHours()) + ':' + 
-                          pad(t.getMinutes()) + ':' + 
-                          pad(t.getSeconds());
+        book.charge.time = pad(t.getHours()) + ':' + 
+                           pad(t.getMinutes()) + ':' + 
+                           pad(t.getSeconds());
+        book.differentOwner = book.charge.library.name != book.owner.name;
         var update = $(whiskers.render(bookTemplate, book));
         update.hide();
         $("#checkouts").prepend(update);
