@@ -43,7 +43,10 @@ footer .library {
   font-weight: bold;
 }
 
-.thumbnail {
+.cover {
+  display: none;
   float: right;
   height: 120px;
+  margin-left: 10px;
+  border: thin solid black;
 }
