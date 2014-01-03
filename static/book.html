@@ -1,0 +1,34 @@
+<article class="book">
+  <img class="cover" src="http://covers.openlibrary.org/b/isbn/{isbn}-M.jpg">
+  <a href="http://findit.library.gwu.edu/item/{id}" class="title">{title}</a>
+  <br>
+  {if author}
+  <span class="author">{author}</span>
+  <br>
+  {/if}
+  <span class="place">{placeOfPublication}</span>
+  <span class="publisher">{publisher}</span>
+  <span class="pubDate">{publicationDate}</span>
+  {if isbn}
+  <br>
+  ISBN: {isbn}
+  {/if}
+
+  <footer>
+  <time datetime="{charge.created}">{charge.time}</time> - 
+  checked out at
+  {if charge.library.url}
+  <a href="{charge.library.url}" class="library">{charge.library.name}</a>
+  {else}
+  <span class="library">{charge.library.name}</span>
+  {/if}
+  {if differentOwner}
+    owned by
+    {if owner.url}
+    <a class="library" href="{owner.url}">{owner.name}</a>
+    {else}
+    <span class="library">{owner.name}</span>
+    {/if}
+  {/if}
+  </footer>
+</article>

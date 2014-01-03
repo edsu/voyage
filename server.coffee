@@ -4,6 +4,7 @@ http = require 'http'
 oracle = require 'oracle'
 express = require 'express'
 pool = require 'generic-pool'
+whiskers = require 'whiskers'
 socketio = require 'socket.io'
 
 # read config
@@ -142,11 +143,14 @@ pollForCheckouts = (cb) ->
 
 
 # create the web app
+
 home = (req, res) ->
-  res.sendfile 'static/index.html'
+  res.render 'index.html', {title: config.title}
 
 app = express()
 app.use '/static', express.static(__dirname + '/static')
+app.engine '.html', whiskers.__express
+app.set 'views', __dirname + '/views'
 app.get '/', home
 server = http.createServer app
 

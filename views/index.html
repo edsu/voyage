@@ -1,0 +1,72 @@
+<!doctype html>
+<html>
+
+  <head>
+    <title>{title}</title>
+    <link rel="stylesheet" href="/static/style.css"></style>
+  </head>
+
+  <body>
+
+    <h1>{title}</h1>
+    <section id="checkouts">
+    </section>
+
+    <script src="/static/whiskers.min.js"></script>
+    <script src="/static/jquery-1.10.2.min.js"></script>
+    <script src="/socket.io/socket.io.js"></script>
+    <script>
+      var bookTemplate = null;
+
+      function run() {
+        // once we've got the book template we can start listening for updates
+        $.ajax("/static/book.html").done(function(text) {
+          bookTemplate = text;
+          var socket = io.connect();
+          socket.on('checkout', addCheckout);
+        });
+      }
+
+      function zeropad(n) {
+        return ('00' + n).slice(-2)
+      }
+
+      function addCheckout(book) {
+        var t = new Date(book.charge.created);
+        // format the chargeTime datetime as HH:MM
+        book.charge.time = zeropad(t.getHours()) + ':' + 
+                           zeropad(t.getMinutes()) + ':' + 
+                           zeropad(t.getSeconds());
+        book.differentOwner = book.charge.library.name != book.owner.name;
+        var update = $(whiskers.render(bookTemplate, book));
+        update.hide();
+        $("#checkouts").prepend(update);
+        update.slideDown(750);
+        adjustImages();
+      }
+
+      /*
+      a bit of a hack to show hidden cover images if it looks like 
+      there was actually a cover image available. OpenLibrary return 
+      an empty image of width 120 when they don't have an image for a
+      given ISBN. Keeping the image hidden when there wasn't a hit should
+      allow bibliographic text to use the empty whitespace.
+      */
+
+      function adjustImages() {
+        $('img').each(function() {
+          $(this).load(function() {
+            var img = $(this);
+            if (img.width() != 120) {
+              img.fadeIn(500);
+            };
+          });
+        });
+      }
+
+      $(run);
+    </script>
+
+  </body>
+
+</html>
