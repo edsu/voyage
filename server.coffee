@@ -45,6 +45,7 @@ select = (q, params, cb) ->
 
 
 # get recent checkouts
+seen = {}
 recentCheckouts = (limit, cb) ->
   q = "
   SELECT * 
@@ -70,7 +71,9 @@ recentCheckouts = (limit, cb) ->
       itemId: row.ITEM_ID
       library: decodeLibrary(row.LIBRARY_NAME)
       created: t
-    getBibData charge, cb
+    if not seen[charge.itemId]
+      getBibData charge, cb
+      seen[charge.itemId] = true
 
 
 # helper to remove some punctuation
@@ -129,16 +132,13 @@ delay = (ms, func) -> setTimeout func, ms
 
 
 # function that polls for recent checkout activity
-seen = {}
 recent = []
 pollForCheckouts = (cb) ->
   recentCheckouts config.recentWindow, (book) ->
-    if not seen[book.id]
-      if recent.length > config.recentWindow
-        recent = recent[1..config.recentWindow]
-      recent.push book
-      seen[book.id] = true
-      cb book
+    if recent.length > config.recentWindow
+      recent = recent[1..config.recentWindow]
+    recent.push book
+    cb book
   delay config.pollDelay, -> pollForCheckouts cb
 
 
@@ -165,6 +165,7 @@ io.sockets.on 'connection', (socket) ->
 
 # start looking for checkouts
 pollForCheckouts (book) ->
+  fs.appendFile 'journal.json', JSON.stringify(book) + "\n"
   io.sockets.emit 'checkout', book
 
 # start up the server!

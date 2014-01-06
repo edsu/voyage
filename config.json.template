@@ -1,6 +1,6 @@
 {
   "port": 8080,
-  "pollDelay": 3000,
+  "pollDelay": 10000,
   "recentWindow": 20,
   "db": {
     "user": "",
