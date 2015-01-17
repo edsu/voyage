@@ -45,7 +45,7 @@ select = (q, params, cb) ->
 
 
 # get recent checkouts
-seen = {}
+seen = {}  # XXX: this grows forever and should be purged somehow
 recentCheckouts = (limit, cb) ->
   q = "
   SELECT * 
